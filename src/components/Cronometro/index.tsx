@@ -3,7 +3,7 @@ import Relogio from "./Relogio";
 import style from './Cronometro.module.scss';
 import { tempoParaSegundos } from "../../common/utils/time";
 import { ITarefa } from "../../types/tarefa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IProps {
     selecionado: ITarefa | undefined
@@ -12,9 +12,13 @@ interface IProps {
 export default function Cronometro({ selecionado }: IProps) {
     const [tempo, setTempo] = useState<number>();
 
-    if (selecionado?.tempo) {
-        setTempo(tempoParaSegundos(selecionado.tempo));
-    }
+    // Sempre que a variável selecionado for alterada, verificamos se o tempo está presente no objeto selecionado
+    // e alteramos o state da variável tempo.
+    useEffect(() => {
+        if (selecionado?.tempo) {
+            setTempo(tempoParaSegundos(selecionado.tempo));
+        }
+    }, [selecionado]);
 
     return (
         <div className={style.cronometro}>
