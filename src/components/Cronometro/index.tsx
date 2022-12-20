@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 
 interface IProps {
     selecionado: ITarefa | undefined
+    finalizarTarefa: () => void
 }
 
-export default function Cronometro({ selecionado }: IProps) {
+export default function Cronometro({ selecionado, finalizarTarefa }: IProps) {
     const [tempo, setTempo] = useState<number>();
 
     // Sempre que a variável selecionado for alterada, verificamos se o tempo está presente no objeto selecionado
@@ -26,6 +27,8 @@ export default function Cronometro({ selecionado }: IProps) {
                 setTempo(contador - 1);
                 return regressiva(contador - 1);
             }
+
+            finalizarTarefa();
         }, 1000);
     }
 
